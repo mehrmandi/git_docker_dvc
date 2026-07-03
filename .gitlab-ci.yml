@@ -1,0 +1,47 @@
+image: python:3.9-slim
+
+stages:
+  - test
+  - train
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+before_script:
+  - python -V  # Print out python version for debugging
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+
+test:
+  stage: test
+  script:
+    - python -m pytest tests/  # Assuming you have a tests directory with test cases
+  only:
+    - master
+
+train:
+  stage: train
+  script:
+    - python app.py
+  artifacts:
+    paths:
+      - models/tfmodel.keras
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying model..."
+    # Add deployment commands here, e.g., copying the model to a server or cloud storage
+  only:
+    - master
