@@ -8,6 +8,6 @@ RUN python -m pip install --no-cache-dir \
 
 WORKDIR /program
 
-COPY model_train_app.py .
+COPY src/model_train_app.py .
 
-CMD ["python", "model_train_app.py"]
+CMD ["python", "src/model_train_app.py"]
