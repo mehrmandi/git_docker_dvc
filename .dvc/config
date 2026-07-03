@@ -1,3 +1,5 @@
+[core]
+    remote = minio
 ['remote "minio"']
-    url = s3://datastorage
+    url = s3://data-storage
     endpointurl = http://localhost:9000
